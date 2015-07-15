@@ -79,6 +79,7 @@ class Task
 
     config.env?= {}
     config.env.PORT?= config.to
+    config.env.NODE_ENV?= 'production'
     delete config.repo
     delete config.from
     delete config.to
