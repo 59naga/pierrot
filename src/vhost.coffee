@@ -16,6 +16,9 @@ vhost=
   bouncy (req,res,bounce)->
     for name,config of yaml.apps when config.from is req.headers.host
       return bounce config.to
+    for name,config of yaml.apps when config.wildcard
+      continue unless req.headers.host.slice(-config.from.length) is config.from
+      return bounce config.to
 
     # https://github.com/substack/bouncy/issues/57#issuecomment-29421435
     req.connection._bouncyStream._handled= false
