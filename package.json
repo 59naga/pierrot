@@ -10,11 +10,7 @@
 
   "scripts": {
     "vhost": "sudo PIERROT_CWD=$(pwd)/test/ coffee pierrot vhost",
-    "apps": "PIERROT_CWD=$(pwd)/test/ coffee pierrot apps",
-
-    "prepublish": "node -e \"if(process.env.TRAVIS){}else{process.exit(1)}\" && npm run compile || echo skip prepublish",
-    "compile": "coffee --bare --compile index.coffee",
-    "postcompile": "coffee --output lib --bare --compile src"
+    "apps": "PIERROT_CWD=$(pwd)/test/ coffee pierrot apps"
   },
   "config": {
     "ghooks": {
@@ -24,7 +20,7 @@
 
   "dependencies": {
     "bluebird": "^2.9.33",
-    "chmodr": "^0.1.1",
+    "coffee-script": "^1.9.3",
     "commander": "^2.8.1",
     "inquirer": "^0.9.0",
     "js-yaml": "^3.3.1",

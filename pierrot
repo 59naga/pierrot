@@ -1,2 +1,5 @@
 #!/usr/bin/env node
-require('./').parse(process.argv);
+if(require('module')._extensions['.coffee']==null){
+  require('coffee-script/register');
+}
+require('./src').parse(process.argv);
