@@ -1,0 +1,29 @@
+# Quick boot options
+sudo: false
+cache:
+  directories:
+    - node_modules
+
+# Ignore version tags
+branches:
+  except:
+    - /^v[0-9]/
+
+# Language options
+language: node_js
+node_js:
+  - '0.10'
+
+env:
+  global:
+    # COVERALLS_REPO_TOKEN
+    # - secure: exQPydAMNRBWp8/KbcAVjoMukyT1wmPhiLVUMtuT5Q8zeN7kziAl7PjtuTgL4oxVwljn1cxlSlHpN+qR66daIfCjzHJwUpgKElUpFl8Y+SiI/fXiYNMVedyrubJkdmRzfmuwdIYbVW1jt+2dbnQEEO/hT3HpYpUIKwYCN9SQWRtAZAtwz6cYWu1jY8tesu/41aeOT+sn2Zqy/Z+j6SIXGPOm8vBYeKRTJ2uCPvONPvxAagqC9BirTePX0I9TLexihIIJgE2iSD7NaTXv76DuVbeUt69wEfEmC0TuNsLDd+r6TFytrs9iXXqN65kmA3g7yHx6s0EYpxvqniT0EcZ2M9Tztj2F99a5WVWQJw8QQ8MUtdmjOvsughTQ2QHIDC97UAWyHYmCluE7Qo94z9T3Tfpduth/fbKXMWZTYiZMJenNZsSsez91m8XUJneGu5w9J+ZsqMfjk0EYDi9qI2fwZk54CRk7d0/8jPlryU52/cf2Y7e51A//NX4Lv6di7Bz+orql31NbIVBcbrjpMvhhXXxG1yEP/pgJ6h91w22eiJcsbSZur7iXQEG/KoDmsknkxX+hUAYL0byTqtw2I3zfqZvfxUX3HcL2WxfPjAVmk1QCrYv/p5mTwzV/oizZCj4/pkDr4Tc2gpDYP2OMwU5yL6F345H4gdOUHokJVG49Y0I=
+
+# Npm publish options
+before_deploy:
+  - npm install coffee-script --global
+deploy:
+  provider: npm
+  email: i59naga@icloud.com
+  api_key:
+    # secure: X+57oXFXkP9rVq/llYkof7nuYuBX6OJPwMwL60bxHerr0LAzIPy4HAZi6HqIJwYXPuhAXPk9jkYj93cPu98kPAOXIcCFSWLEnv3/SB/3aKCyn0Bn2Ei7igjU+LB0L8KQ36dsqVMuCvISQiUU/MuqqhCN/0OZuKIbOyRQMf7NwaTBKkBDsX7XCTXMSdT3d06djfIEs1L12MYgtoh9btiF8v8zUyBITxuf22iI9g7M4O1Uk4A17N1UD6qTsFzeCJhHVgL2gHluKgzA2zdoWy22A88LkK1u2TOl+49VSoxVaGCbV9xZ9rjbLoiCBr9bTy6/soooCrOPz6BIipCtk4ea7+o1hUVDuBkqyIkXLF3kAflPDoXmJVKTb96HLyM9qm/zAV+SX5I90jG4QL+cV8mpvyIprsVTPQ13tb2xd804V5KVdE9CnL8sZA6AMxame0nuT/6ktI3P6yAp6u4MxC01FZ9Pxt75QZYvibeGYbN/quVjmo5ta03BB97ciNghjYqgMWbF7LTnmHXqLtCAiUPd34BKEeak0Cxw7F66gZjTvcgvn8VkRAOZXWVPRufYDAbArCtg/+rysx1o/SSCTfPV/kthSodZtuAAPft7nUk7qhzvAaaj6VR6fEdgsld6TYwfbqZrdrBzUdd87tSZpDN0ToMFSoX5qtNhjXLFO/kcBGM=

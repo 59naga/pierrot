@@ -1,0 +1,23 @@
+apps:
+  homepage:
+    repo: https://github.com/59naga/berabou.me.git
+    from: 59naga.localhost
+    to: 59798
+
+  # turnout:
+  #   repo: https://github.com/59naga/turnout.berabou.me.git
+  #   from: turnout.berabou.me
+  #   to: 59799
+
+  # soysauce:
+  #   from: soysauce.berabou.me
+  #   to: 59800
+  #   instances: 8
+
+  # static:
+  #   from: static.edgy.black
+  #   to: 59000
+
+  # website:
+  #   from: edgy.website
+  #   to: 59001
