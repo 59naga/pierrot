@@ -39,7 +39,7 @@ class Manager
       Task= tasks[answers.task]
       
       task= new Task yaml
-      task.execute answers.apps
+      task.run answers.apps
       .then (apps)->
         task= answers.task
         successes= []

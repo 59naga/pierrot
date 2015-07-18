@@ -4,24 +4,22 @@ Task= require '../task'
 
 # Public
 class Update extends Task
-  execute: (apps)->
-    Promise.resolve()
-    .then =>
-      Promise.settle(
-        for name in apps when @yaml.apps[name]?.repo
-          @pull name,@yaml.apps[name]
-      )
+  run: (apps)->
+    Promise.settle(
+      for name in apps when @yaml.apps[name]?.repo
+        config= @yaml.apps[name]
 
-    .then =>
-      Promise.settle(
-        for name in apps
-          @install name,@yaml.apps[name]
-      )
+        do (name,config)=>
+          @pull name,config
+          .then =>
+            @install name,config
+            
+          .then =>
+            @promise 'reload',name
 
-    .then =>
-      Promise.settle(
-        for name in apps
-          @deleteAndStart name,@yaml.apps[name]
-      )
+          .then ->
+            name
+            
+    )
 
 module.exports= Update

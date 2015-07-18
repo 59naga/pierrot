@@ -58,7 +58,7 @@ class Inquirer
 
         type: 'confirm'
         message: 'really'
-        default: false
+        default: true
       }
     ]
 

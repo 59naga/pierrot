@@ -11,20 +11,6 @@ rimraf= Promise.promisify require 'rimraf'
 path= require 'path'
 spawn= (require 'child_process').spawn
 
-# Private
-spawnAsync= (command,options={})->
-  [bin,args...]= command.split /\s+/
-
-  options.cwd?= process.env.PIERROT_CWD
-  # options.stdio?= 'inherit'
-  cwd= path.relative process.env.PIERROT_CWD,options.cwd
-  console.log '%s: %s',cwd,command
-
-  new Promise (resolve,reject)->
-    child= spawn bin,args,options
-    child.on 'close',resolve
-    child.on 'error',reject
-
 # Public
 class Task
   constructor: (@yaml)->
@@ -39,7 +25,7 @@ class Task
     options=
       cwd: process.env.PIERROT_APPS
 
-    spawnAsync command,options
+    @spawnAsync command,options
 
   pull: (name,config)->
     return Promise.resolve() unless config.repo
@@ -48,7 +34,7 @@ class Task
     options=
       cwd: process.env.PIERROT_APPS+name
 
-    spawnAsync command,options
+    @spawnAsync command,options
 
   install: (name,config)->
     return Promise.resolve() unless config.repo
@@ -57,7 +43,20 @@ class Task
     options=
       cwd:process.env.PIERROT_APPS+name
 
-    spawnAsync command,options
+    @spawnAsync command,options
+
+  spawnAsync: (command,options={})->
+    [bin,args...]= command.split /\s+/
+
+    options.cwd?= process.env.PIERROT_CWD
+    # options.stdio?= 'inherit'
+    cwd= path.relative process.env.PIERROT_CWD,options.cwd
+    console.log '%s: %s',cwd,command
+
+    new Promise (resolve,reject)->
+      child= spawn bin,args,options
+      child.on 'close',resolve
+      child.on 'error',reject
 
   deleteAndStart: (name,config)->
     cwd= path.relative process.env.PIERROT_CWD, process.env.PIERROT_APPS+name
@@ -86,10 +85,8 @@ class Task
 
     pm2.deleteAndStart script,config
 
-  restart: (name)->
-    pm2.restartAsync name
-    .then ->
-      name
+  promise: (method,name)->
+    pm2[method+'Async'] name
     .catch (error)->
       Promise.reject {name:name, message:error.message ? 'not started'}
 

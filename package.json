@@ -1,6 +1,6 @@
 {
   "name": "pierrot",
-  "version": "0.0.0-alpha.3",
+  "version": "0.0.0-alpha.4",
   "description": "pm2 bouncy plugin",
 
   "bin": "pierrot",
@@ -9,8 +9,8 @@
   },
 
   "scripts": {
-    "vhost": "sudo PIERROT_CWD=$(pwd)/test/ coffee pierrot vhost",
-    "apps": "PIERROT_CWD=$(pwd)/test/ coffee pierrot apps"
+    "vhost": "sudo PIERROT_CWD=$(pwd)/test/ node pierrot vhost",
+    "apps": "PIERROT_CWD=$(pwd)/test/ node pierrot apps"
   },
   "config": {
     "ghooks": {

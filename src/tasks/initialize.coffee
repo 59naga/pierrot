@@ -4,30 +4,25 @@ Task= require '../task'
 
 # Public
 class Reset extends Task
-  execute: (apps)->
-    Promise.resolve()
-    .then =>
-      Promise.settle(
-        for name in apps when @yaml.apps[name]?.repo
+  run: (apps)->
+    Promise.settle(
+      for name in apps when @yaml.apps[name]?.repo
+        config= @yaml.apps[name]
+
+        do (name,config)=>
           @rimraf process.env.PIERROT_APPS+name
-      )
+          .then =>
+            @clone name,config
 
-    .then =>
-      Promise.settle(
-        for name in apps
-          @clone name,@yaml.apps[name]
-      )
+          .then =>
+            @install name,config
 
-    .then =>
-      Promise.settle(
-        for name in apps
-          @install name,@yaml.apps[name]
-      )
+          .then =>
+            @deleteAndStart name,config
 
-    .then =>
-      Promise.settle(
-        for name in apps
-          @deleteAndStart name,@yaml.apps[name]
-      )
+          .then ->
+            name
+            
+    )
 
 module.exports= Reset
