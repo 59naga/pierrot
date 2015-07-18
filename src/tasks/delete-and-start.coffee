@@ -6,7 +6,7 @@ Task= require '../task'
 class DeleteAndStart extends Task
   run: (apps)->
     Promise.settle(
-      for name in apps when @yaml.apps[name]?.repo
+      for name in apps
         config= @yaml.apps[name]
 
         do (name,config)=>
