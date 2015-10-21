@@ -9,21 +9,21 @@ inquirer= require 'inquirer'
 fs= require 'fs'
 path= require 'path'
 
-# Private
-cacheName= path.join process.cwd(),'.pierrotrc'
-cache=
-  try
-    JSON.parse fs.readFileSync cacheName
-  catch
-    fs.writeFileSync cacheName,'{}'
-    JSON.parse fs.readFileSync cacheName
-
 # Public
 class Inquirer
+  constructor: ->
+    @cacheName= path.join process.cwd(),'.pierrotrc'
+    @cache=
+      try
+        JSON.parse fs.readFileSync @cacheName
+      catch
+        fs.writeFileSync @cacheName,'{}'
+        JSON.parse fs.readFileSync @cacheName
+
   inquiry: (prompts)->
-    new Promise (resolve)->
-      inquirer.prompt prompts,(answers)->
-        fs.writeFileSync cacheName,JSON.stringify answers,null,2
+    new Promise (resolve)=>
+      inquirer.prompt prompts,(answers)=>
+        fs.writeFileSync @cacheName,JSON.stringify answers,null,2
         
         resolve answers
 
@@ -38,7 +38,7 @@ class Inquirer
         type: 'checkbox'
         message: 'apps'
         choices: appNames
-        default: cache.apps
+        default: @cache.apps
         validate: (apps)->
           if apps.length
             true
@@ -51,7 +51,7 @@ class Inquirer
         type: 'list'
         message: 'task'
         choices: commandNames
-        default: cache.task
+        default: @cache.task
       }
       {
         name: 'really'

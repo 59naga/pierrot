@@ -49,7 +49,7 @@ class Task
     [bin,args...]= command.split /\s+/
 
     options.cwd?= process.env.PIERROT_CWD
-    # options.stdio?= 'inherit'
+    options.stdio?= 'inherit'
     cwd= path.relative process.env.PIERROT_CWD,options.cwd
     console.log '%s: %s',cwd,command
 

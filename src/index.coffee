@@ -6,7 +6,7 @@
 version= (require '../package').version
 
 Command= (require 'commander').Command
-manager= require './manager'
+Manager= (require './manager').Manager
 pm2= require './pm2'
 
 spawn= (require 'child_process').spawn
@@ -22,51 +22,14 @@ class Pierrot extends Command
     @command 'apps'
     .alias 'a'
     .description 'Provide applications using ./pierrot.yml'
-    .action ->
-      pm2.connectAsync()
-      .then ->
-        manager.apps()
-
-      .spread (task,successes,failures)->
-        console.log ''
-        console.log '%s was successfully the `%s`', name, task for name in successes
-        console.error '%s was failure: %s', name, message for {name,message} in failures
-        console.log ''
-      
-      .then ->
-        pm2.list()
-
-      .catch (error)->
-        console.log error
-
-      .finally ->
-        pm2.disconnect()
+    .action =>
+      @provide()
 
     @command 'vhost'
     .alias 'v'
     .description 'host routing for applications'
-    .action ->
-      pm2.connectAsync()
-
-      .then ->
-        manager.vhost()
-
-      .then ->
-        pm2.list()
-
-      .then (answers)->
-        console.log ''
-        console.log 'successfully `vhost`.'
-        console.log ''
-        console.log '  Please fix:'
-        console.log ''
-        console.log '  $ sudo chmod -R 777 ~/.pm2'
-        console.log ''
-        console.log '  See: https://github.com/Unitech/PM2/issues/837'
-        console.log ''
-
-      .finally ->
-        pm2.disconnect()
+    .action =>
+      @vhost()
 
     @command 'pm2 [cmd...]'
     .alias 'p'
@@ -84,6 +47,52 @@ class Pierrot extends Command
       console.error ''
 
     @outputHelp() if invalid or @args.length is 0
+
+  provide: ->
+    manager= new Manager
+
+    pm2.connectAsync()
+    .then ->
+      manager.apps()
+
+    .spread (task,successes,failures)->
+      console.log ''
+      console.log '%s was successfully the `%s`', name, task for name in successes
+      console.error '%s was failure: %s', name, message for {name,message} in failures
+      console.log ''
+    
+    .then ->
+      pm2.list()
+
+    .catch (error)->
+      console.log error
+
+    .finally ->
+      pm2.disconnect()
+
+  vhost: ->
+    manager= new Manager
+
+    pm2.connectAsync()
+    .then ->
+      manager.vhost()
+
+    .then ->
+      pm2.list()
+
+    .then (answers)->
+      console.log ''
+      console.log 'successfully `vhost`.'
+      console.log ''
+      console.log '  Please fix:'
+      console.log ''
+      console.log '  $ sudo chmod -R 777 ~/.pm2'
+      console.log ''
+      console.log '  See: https://github.com/Unitech/PM2/issues/837'
+      console.log ''
+
+    .finally ->
+      pm2.disconnect()
 
 module.exports= new Pierrot
 module.exports.Pierrot= Pierrot

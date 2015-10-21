@@ -1,11 +1,8 @@
 # Dependencies
-stripAnsi= require 'strip-ansi'
-Readline= require './readline'
-
-# pierrot= require '../src'
 Pierrot= (require '../src').Pierrot
 
 # Environment
+process.env.PIERROT_CWD= __dirname
 
 # Specs
 describe 'pierrot',->

@@ -86,6 +86,35 @@ $ tree
 
 And be available the `http://59naga.localhost` if Add `127.0.0.1 59naga.localhost` to `/etc/hosts`.
 
+# Pierrot tasks
+
+Always set the `production` to `process.env.NODE_ENV`.
+
+## `reload`
+
+1. Pulling repositories in specified apps (eg `cd apps/name && git pull`).
+2. Reload the processes. (eg `pm2 reload <apps...>`)
+
+## `update`
+
+1. Pulling repositories in specified apps (eg `cd apps/name && git pull`).
+2. __Install dependencies__. (eg `npm install --production`)
+3. Reload the processes. (eg `pm2 reload <apps...>`)
+
+## `deleteAndStart`
+
+1. Remove the processes. (eg `pm2 delete <apps...>`)
+2. Start the processes __using pierrot.yml__[^1][^1]. (eg `pm2 start <apps...>`)
+
+[^1]: Defined in the `apps` of `pierrot.yml`. originally, it shall be defined in the `app.json`.
+
+## `initialize`
+
+1. __Delete the folder of apps__ if has `apps/repo`. (eg `rm -rf <apps/name>`)
+2. Clone the `apps/repo` as `apps/name`. (eg `git clone apps/repoValue apps/name`)
+3. Install dependencies. (eg `cd apps/name && npm install --production`)
+4. Start the processes using `pierrot.yml`. (eg `pm2 start <apps...>`)
+
 License
 ---
 [MIT][License]

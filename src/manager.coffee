@@ -14,21 +14,20 @@ tasks= require './tasks'
 fs= require 'fs'
 path= require 'path'
 
-# Environment
-process.env.PIERROT_LIB?= __dirname+path.sep
-process.env.PIERROT_CWD?= process.cwd()+path.sep
-process.env.PIERROT_APPS?= process.env.PIERROT_CWD+'apps'+path.sep
-process.env.PIERROT_YAML?= process.env.PIERROT_CWD+'pierrot.yml'
-
-# Private
-yaml= jsYaml.safeLoad fs.readFileSync process.env.PIERROT_YAML,'utf8'
-
 # Public
 class Manager
+  constructor: ->
+    process.env.PIERROT_LIB?= __dirname+path.sep
+    process.env.PIERROT_CWD?= process.cwd()+path.sep
+    process.env.PIERROT_APPS?= process.env.PIERROT_CWD+'apps'+path.sep
+    process.env.PIERROT_YAML?= process.env.PIERROT_CWD+'pierrot.yml'
+
+    @yaml= jsYaml.safeLoad fs.readFileSync process.env.PIERROT_YAML,'utf8'
+
   apps: ->
     return Promise.reject 'not use sudo' if process.getuid() is 0
 
-    prompts= inquirer.getPrompts yaml.apps,tasks
+    prompts= inquirer.getPrompts @yaml.apps,tasks
 
     mkdirp.sync process.env.PIERROT_APPS
 
@@ -38,7 +37,7 @@ class Manager
 
       Task= tasks[answers.task]
       
-      task= new Task yaml
+      task= new Task @yaml
       task.run answers.apps
       .then (apps)->
         task= answers.task
@@ -63,4 +62,4 @@ class Manager
 
     pm2.deleteAndStart script,config
 
-module.exports= new Manager
+module.exports.Manager= Manager

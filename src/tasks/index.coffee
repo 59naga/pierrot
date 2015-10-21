@@ -3,11 +3,14 @@
 # value : class ::run promise factory
 
 module.exports=
-  'update         e.g. $ git pull && npm install --production && pm2 reload':
+  'reload':
+    require './reload'
+
+  'update':
     require './update'
 
-  'deleteAndStart e.g. $ pm2 start # using pierrot.yml':
+  'deleteAndStart':
     require './delete-and-start'
 
-  'initialize     e.g. $ rm -rf && git clone && npm install --production && pm2 start':
+  'initialize':
     require './initialize'

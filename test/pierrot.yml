@@ -1,20 +1,25 @@
 apps:
   homepage1:
     repo: https://github.com/59naga/berabou.me.git
-    from: 59naga.localhost
+    from: homepage1.59naga.localhost
     to: 59798
+
   homepage2:
     repo: https://github.com/59naga/berabou.me.git
-    from: 59naga.localhost
+    from: homepage2.59naga.localhost
     to: 59799
+
   homepage3:
     repo: https://github.com/59naga/berabou.me.git
-    from: 59naga.localhost
+    from: homepage3.59naga.localhost
     to: 59800
+
   homepage4:
     repo: https://github.com/59naga/berabou.me.git
-    from: 59naga.localhost
+    from: homepage4.59naga.localhost
     to: 59801
+
+  # otherwise
   homepage5:
     repo: https://github.com/59naga/berabou.me.git
     from: 59naga.localhost
