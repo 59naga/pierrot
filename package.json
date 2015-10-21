@@ -7,6 +7,10 @@
   "engines": {
     "node" : ">=0.12.0"
   },
+  "files": [
+    "pierrot",
+    "src"
+  ],
 
   "scripts": {
     "start": "jasminetea --file index.coffee --watch",
