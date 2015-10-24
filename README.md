@@ -88,7 +88,8 @@ And be available the `http://59naga.localhost` if Add `127.0.0.1 59naga.localhos
 
 # Pierrot tasks
 
-Always set the `production` to `process.env.NODE_ENV`.
+Always set the `production` to `process.env.NODE_ENV` of process. And set the `apps/to` to `process.env.PORT`.
+Transfer the request to the `app/to` of process. if `VHOST` was access as `app/from`.
 
 ## `reload`
 
