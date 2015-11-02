@@ -5,7 +5,7 @@
 ## Installation
 
 ```bash
-$ npm install pm2 bouncy pierrot --global
+$ npm install pm2 bouncy pierrot coffee-script --global
 ```
 
 ## Define pierrot.yml
