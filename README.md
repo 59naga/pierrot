@@ -5,7 +5,7 @@
 ## Installation
 
 ```bash
-$ npm install pm2 bouncy pierrot coffee-script --global
+$ npm install pm2 bouncy pierrot --global
 ```
 
 ## Define pierrot.yml
@@ -88,8 +88,7 @@ And be available the `http://59naga.localhost` if Add `127.0.0.1 59naga.localhos
 
 # Pierrot tasks
 
-Always set the `production` to `process.env.NODE_ENV` of process. And set the `apps/to` to `process.env.PORT`.
-Transfer the request to the `app/to` of process. if `VHOST` was access as `app/from`.
+Always set the `production` to `process.env.NODE_ENV`.
 
 ## `reload`
 
@@ -115,6 +114,27 @@ Transfer the request to the `app/to` of process. if `VHOST` was access as `app/f
 2. Clone the `apps/repo` as `apps/name`. (eg `git clone apps/repoValue apps/name`)
 3. Install dependencies. (eg `cd apps/name && npm install --production`)
 4. Start the processes using `pierrot.yml`. (eg `pm2 start <apps...>`)
+
+# `302 redirect`
+
+VHOST sends the Location header in the 302 if specify `app/to` as string.
+
+```yml
+  oldSite:
+    from: oldsite.example.com
+    to: renewal.example.com
+```
+
+```bash
+pm2 reload VHOST
+# ...
+
+curl oldsite.example.com/foo/bar?baz --head
+# HTTP/1.1 302 Found
+# Location: http://renewal.example.com/foo/bar?baz
+# Date: Mon, 02 Nov 2015 03:36:34 GMT
+# Connection: keep-alive
+```
 
 License
 ---

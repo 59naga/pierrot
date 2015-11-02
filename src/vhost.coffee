@@ -15,7 +15,18 @@ yaml= jsYaml.safeLoad fs.readFileSync process.env.PIERROT_YAML,'utf8'
 vhost=
   bouncy (req,res,bounce)->
     for name,config of yaml.apps when config.from is req.headers.host
-      return bounce config.to
+      return bounce config.to unless typeof config.to is 'string'
+      
+      schema= unless req.connection.encrypted? then 'http://' else 'https://'
+
+      uri= config.to
+      uri= schema+uri unless uri[0...4] is 'http'
+      uri+= req.url
+
+      res.writeHead 302,{Location:uri}
+      res.end()
+      return
+
     for name,config of yaml.apps when config.wildcard
       continue unless req.headers.host.slice(-config.from.length) is config.from
       return bounce config.to
