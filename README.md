@@ -1,6 +1,6 @@
 # Pierrot [![NPM version][npm-image]][npm] [![Build Status][travis-image]][travis] [![Coverage Status][coveralls-image]][coveralls]
 
-> pm2 bouncy plugin
+> pm2 virtual-host and deploy cli
 
 ## Installation
 
@@ -10,7 +10,7 @@ $ npm install pm2 bouncy pierrot --global
 
 ## Define pierrot.yml
 
-Can use `$ sudo pierrot vhost` if define one or more apps in `./pierrot.yml`.
+Can use `$ sudo pierrot vhost` if define one or more `apps` in `./pierrot.yml`.
 
 ```yaml
 apps:
@@ -134,6 +134,29 @@ curl oldsite.example.com/foo/bar?baz --head
 # Location: http://renewal.example.com/foo/bar?baz
 # Date: Mon, 02 Nov 2015 03:36:34 GMT
 # Connection: keep-alive
+```
+
+# `https`
+
+Define `key` and `cert` fields to `./pierrot.yml`.
+Becomes add the port 443(secure mode) at `pierrot vhost`.
+
+```yaml
+key: /path/to/private.key
+cert: /path/to/public.cert
+
+apps:
+  homepage:
+    repo: https://github.com/59naga/berabou.me.git
+    from: 59naga.localhost
+    to: 59798
+```
+
+```bash
+$ sudo pierrot vhost
+$ pm2 logs VHOST
+# PIERROT_VHOST listening at http://localhost:80/
+# PIERROT_VHOST listening at http://localhost:443/
 ```
 
 License

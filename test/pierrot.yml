@@ -1,3 +1,6 @@
+key: nothing-private.key
+cert: nothing-public.cert
+
 apps:
   homepage1:
     repo: https://github.com/59naga/berabou.me.git
