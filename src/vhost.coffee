@@ -46,9 +46,10 @@ bouncy(requestListener).listen 80,->
 if yaml.key and yaml.cert
   return console.warn "Not exists `#{yaml.key}` skip." unless fs.existsSync yaml.key
 
-  bouncy requestListener,
+  bouncy
     key: fs.readFileSync yaml.key
     cert: fs.readFileSync yaml.cert
+  ,requestListener
 
   .listen 443,->
     try
